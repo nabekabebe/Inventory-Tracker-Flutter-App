@@ -1,4 +1,4 @@
-# Inventory Management App
+# Geengo Inventory Management App
 
 Inventory Management App is a powerful Flutter application designed to help businesses manage their
 inventory efficiently. The app comes with a range of features that make it easy for managers and
@@ -28,17 +28,16 @@ Here are some of the key features of Inventory Management App:
   it easy to move inventory between locations.
 
 <p align="center">
-  <img alt="Light" src="./assets/screenshots/home.png" width="25%">
+  <img alt="home" src="./assets/screenshots/home.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="./assets/screenshots/search.png" width="25%">
+  <img alt="search" src="./assets/screenshots/search.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="./assets/screenshots/report.png" width="25%">
+  <img alt="report" src="./assets/screenshots/report.png" width="25%">
+  <img alt="warehouse" src="./assets/screenshots/warehouse.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="./assets/screenshots/warehouse.png" width="25%">
-
- <img alt="Dark" src="./assets/screenshots/add.png" width="25%">
+ <img alt="add" src="./assets/screenshots/add.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="./assets/screenshots/filter.png" width="25%">
+  <img alt="filter" src="./assets/screenshots/filter.png" width="25%">
 </p>
 
 ## Getting Started
