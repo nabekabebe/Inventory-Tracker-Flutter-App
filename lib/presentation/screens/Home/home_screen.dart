@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                             height: 8,
                           ),
                           Text(
-                            "WELCOME, ${homeC.user?.fullName.split(' ')[0].toUpperCase()}",
+                            "WELCOME, ${homeC.user != null ? homeC.user?.fullName.split(' ')[0].toUpperCase() : "Nabek"}",
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ],
@@ -107,6 +107,8 @@ class _HomePageState extends State<HomePage> {
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (ctx, int index) {
+                      final random = Random();
+                      final randomNumber = random.nextInt(9);
                       return index % 4 == 0
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,18 +123,17 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                                 TransactionListItem(
-                                    soldCount:
-                                        (index + 1) * Random(1).nextInt(10),
-                                    time: "1hr ago",
-                                    title: "Timer Land",
-                                    money: "4.4k")
+                                    soldCount: (index + 1) * randomNumber,
+                                    time: "${index + 1}hr ago",
+                                    title: names[randomNumber],
+                                    money: "$randomNumber.4k")
                               ],
                             )
                           : TransactionListItem(
-                              soldCount: (index + 1) * Random(1).nextInt(10),
-                              time: "1hr ago",
-                              title: "Timer Land",
-                              money: "4.4k");
+                              soldCount: (index + 1) * randomNumber,
+                              time: "${index + 1}hr ago",
+                              title: names[randomNumber],
+                              money: "$randomNumber.4k");
                     },
                     itemCount: 10,
                   ),

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_tracker/core/widgets/custom_dropdown.dart';
+import 'package:inventory_tracker/data/data.dart';
 import 'package:inventory_tracker/domain/controllers/report_controller.dart';
 import 'package:inventory_tracker/presentation/screens/Home/widgets/BarChartWrapper.dart';
 
@@ -123,31 +126,33 @@ class _InventoryReportState extends State<InventoryReport> {
               shrinkWrap: true,
               itemCount: 10,
               itemBuilder: (context, idx) {
+                final random = Random();
+                final randomNumber = random.nextInt(9);
                 return Card(
                   elevation: 0.5,
                   child: ListTile(
-                    title: const Text("Timberland"),
+                    title: Text(names[randomNumber]),
                     subtitle: RichText(
-                        text: const TextSpan(
+                        text: TextSpan(
                             text: 'Sold\t\t',
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                             children: [
                           TextSpan(
-                              text: "400",
-                              style: TextStyle(
+                              text: (randomNumber + 5).toString(),
+                              style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold)),
                         ])),
                     trailing: RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                           text: '+ ',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.green, fontWeight: FontWeight.bold),
                           children: [
                             TextSpan(
-                              text: "43k ",
+                              text: "$randomNumber.4k ",
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: "ETB",
                               style: TextStyle(
                                   color: Colors.black,

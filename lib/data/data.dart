@@ -1,5 +1,18 @@
 import 'package:inventory_tracker/presentation/screens/Home/widgets/BarChartWrapper.dart';
 
+List<String> names = [
+  "Knee-Hi",
+  "Kill shot 2"
+      "Air jordan",
+  "STRUT",
+  "Turn Heads",
+  "Catwalk",
+  "Stiletto",
+  "Solina",
+  "Trekist",
+  "Air jordan"
+];
+
 Map<int, ChartData> annualData = {
   1: ChartData("Jan", 15800),
   2: ChartData("Feb", 6800, true),

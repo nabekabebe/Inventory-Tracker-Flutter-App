@@ -24,7 +24,7 @@ class _SearchPageState extends State<SearchPage>
   late AnimationController controller;
   late FloatingSearchBarController searchBarController;
 
-  final searchLists = ["rabbit", "dog", "cat"];
+  final searchLists = ["timberland", "nike", "mousepad"];
 
   @override
   void initState() {

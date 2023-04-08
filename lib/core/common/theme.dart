@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
 
-  static final Color _iconColor = Colors.amber.shade900;
+  static final Color _iconColor = Colors.teal.shade600;
   static const Color _lightPrimaryColor = Color(0xFF546E7A);
   static const Color _lightPrimaryVariantColor = Color(0xFF394F53);
   static const Color _lightSecondaryColor = Colors.green;
@@ -54,8 +54,9 @@ class AppTheme {
       dividerTheme: const DividerThemeData(color: Colors.black));
 
   static const TextTheme _lightTextTheme = TextTheme(
-      displayLarge: _lightScreenHeading1TextStyle,
-      titleLarge: _lightTitleTextStyle);
+    displayLarge: _lightScreenHeading1TextStyle,
+    // titleLarge: _lightTitleTextStyle,
+  );
 
   static final TextTheme _darkTextTheme = TextTheme(
     displayLarge: _darkScreenHeading1TextStyle,
