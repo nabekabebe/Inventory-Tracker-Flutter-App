@@ -1,4 +1,5 @@
 import 'package:inventory_tracker/data/dto/inventory_store.dto.dart';
+import 'package:inventory_tracker/data/dto/variation.dto.dart';
 import 'package:inventory_tracker/domain/entity/inventory.dart';
 
 import 'inventory_category.dto.dart';
@@ -18,6 +19,7 @@ class InventoryDto {
     required this.sellPrice,
     required this.categoryId,
     required this.totalQuantity,
+    required this.variation,
     this.category,
     this.stores,
   });
@@ -36,6 +38,7 @@ class InventoryDto {
     sellPrice = json['sell_price'];
     categoryId = json['category_id'];
     totalQuantity = json['total_quantity'];
+    variation = InventoryVariationDto.fromJson(json['variation']);
     category = InventoryCategoryDto.fromJson(json['category']);
     if (json['stores'] != null) {
       stores = [];
@@ -58,6 +61,7 @@ class InventoryDto {
   late final int sellPrice;
   late final int categoryId;
   late final String totalQuantity;
+  late final InventoryVariationDto variation;
   late final InventoryCategoryDto? category;
   late final List<InventoryStores>? stores;
 
@@ -76,6 +80,7 @@ class InventoryDto {
     map['sell_price'] = sellPrice;
     map['category_id'] = categoryId;
     map['total_quantity'] = totalQuantity;
+    map['variation'] = variation.toJson();
     map['category'] = category?.toJson();
     map['stores'] = stores?.map((v) => v.toJson()).toList();
     return map;
@@ -88,15 +93,13 @@ class InventoryDto {
         barcode: barcode,
         description: description,
         createdAt: createdAt,
-        size: size,
         sellPrice: sellPrice,
-        brand: brand,
-        color: color,
         manufacturer: manufacturer,
         purchasePrice: purchasePrice,
         totalQuantity: totalQuantity,
         categoryId: categoryId,
         category: category,
-        stores: stores);
+        stores: stores,
+        variation: variation);
   }
 }

@@ -10,13 +10,13 @@ abstract class InventoryDao {
   Stream<Inventory?> getOne(int id);
 
   @insert
-  Future<void> insertOne(Inventory inventory);
+  Future<int> insertOne(Inventory inventory);
 
   @insert
-  Future<void> insertAll(List<Inventory> inventories);
+  Future<List<int>> insertAll(List<Inventory> inventories);
 
-  @delete
-  Future<void> deleteOne(Inventory inventory);
+  @Query('DELETE FROM Inventory WHERE id=:id')
+  Future<void> deleteOne(int id);
 
   @Query("DELETE FROM Inventory")
   Future<void> deleteAll();
@@ -24,4 +24,8 @@ abstract class InventoryDao {
   @transaction
   Future<void> replaceAll(List<Inventory> inventories) =>
       Future.wait([deleteAll(), insertAll(inventories)]);
+
+  @transaction
+  Future<void> replace(Inventory inventory) =>
+      Future.wait([deleteOne(inventory.id), insertOne(inventory)]);
 }

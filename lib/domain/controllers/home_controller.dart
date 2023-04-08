@@ -1,6 +1,5 @@
 import 'dart:isolate';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:inventory_tracker/core/common/routes.dart';
 import 'package:inventory_tracker/core/utils/common.dart';
@@ -23,13 +22,13 @@ class HomeController extends BaseController<Inventory> {
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (user == null) {
-        Get.offAllNamed(Routes.LOGIN, arguments: {'withError': true});
-      }
-    });
-    // fetchStocks();
-    fetchLowInStock();
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   if (user == null) {
+    //     Get.offAllNamed(Routes.LOGIN, arguments: {'withError': true});
+    //   }
+    // });
+    // // fetchStocks();
+    // fetchLowInStock();
   }
 
   User? get user => sessionManager.getLoggedInUser();

@@ -11,7 +11,7 @@ enum PaymentMethod { bank, cash }
 class SearchController extends BaseController with FormValidationMixin {
   static SearchController get c => Get.find<SearchController>();
 
-  final queryText = TextEditingController();
+  final queryText = "".obs;
   final focusNode = FocusNode();
 
   final scannedString = "".obs;
@@ -24,12 +24,14 @@ class SearchController extends BaseController with FormValidationMixin {
 
   final transaction = "".obs;
 
+  final chosenIcon = true.obs;
+
   void sellItem() {}
 
   void refundItem() {}
 
   void scanBarcode() async {
-    queryText.text = await FlutterBarcodeScanner.scanBarcode(
+    queryText.value = await FlutterBarcodeScanner.scanBarcode(
         "#ff6666", "Cancel", false, ScanMode.BARCODE);
   }
 

@@ -1,8 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:inventory_tracker/core/common/app_constants.dart';
-import 'package:inventory_tracker/core/common/routes.dart';
 import 'package:inventory_tracker/core/widgets/StatusCard.dart';
 import 'package:inventory_tracker/data/data.dart';
 import 'package:inventory_tracker/domain/controllers/home_controller.dart';
@@ -27,14 +25,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Colors.teal,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: 0,
-            onTap: Routes.switchRoute,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            items: AppConstants.bottomNavItems),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -106,10 +96,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  padding: const EdgeInsets.only(top: 12.0, bottom: 4),
                   child: Text(
-                    "Recent Orders",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    "Orders",
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
                 Expanded(
@@ -117,11 +107,32 @@ class _HomePageState extends State<HomePage> {
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (ctx, int index) {
-                      return TransactionListItem(
-                          soldCount: (index + 1) * Random(1).nextInt(10),
-                          time: "1hr ago",
-                          title: "Timer Land",
-                          money: "4.4k");
+                      return index % 4 == 0
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0),
+                                  child: Text(
+                                    "Today",
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ),
+                                TransactionListItem(
+                                    soldCount:
+                                        (index + 1) * Random(1).nextInt(10),
+                                    time: "1hr ago",
+                                    title: "Timer Land",
+                                    money: "4.4k")
+                              ],
+                            )
+                          : TransactionListItem(
+                              soldCount: (index + 1) * Random(1).nextInt(10),
+                              time: "1hr ago",
+                              title: "Timer Land",
+                              money: "4.4k");
                     },
                     itemCount: 10,
                   ),

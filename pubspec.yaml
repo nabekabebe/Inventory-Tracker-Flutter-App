@@ -39,6 +39,9 @@ dependencies:
   flutter_spinkit: ^5.1.0
   material_design_icons_flutter: ^6.0.7096
   font_awesome_flutter: ^10.3.0
+  material_floating_search_bar: ^0.3.7
+  file_picker: ^5.2.7
+  excel: ^2.1.0
 
   #getx state manager:
   get: ^4.6.5

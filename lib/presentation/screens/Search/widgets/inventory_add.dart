@@ -158,7 +158,9 @@ class _AddInventoryState extends State<AddInventory> {
                   SizedBox(
                     width: widthQuery(context, 80),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        inventoryC.submitForm();
+                      },
                       child: const Text("Add"),
                     ),
                   )

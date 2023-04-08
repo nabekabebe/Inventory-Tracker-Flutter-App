@@ -19,13 +19,12 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (AuthController.c.isLoggedIn()) {
-        Get.toNamed(Routes.HOME);
+        Get.toNamed(Routes.APP);
       } else {
         Get.toNamed(Routes.LOGIN);
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +38,6 @@ class SplashScreenState extends State<SplashScreen> {
                 image: AssetImage("assets/icons/inventory_launcher.png"),
                 width: 100,
                 height: 100),
-            // Image.asset("assets/icons/inventory_launcher.png",
-            //     width: 100, height: 100),
             SizedBox(height: 25),
             SpinKitDoubleBounce(
               color: Colors.blue,

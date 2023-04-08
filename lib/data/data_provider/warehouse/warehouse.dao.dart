@@ -10,13 +10,13 @@ abstract class WarehouseDao {
   Stream<Warehouse?> getOne(int id);
 
   @insert
-  Future<void> insertOne(Warehouse warehouse);
+  Future<int> insertOne(Warehouse warehouse);
 
   @insert
-  Future<void> insertAll(List<Warehouse> warehouses);
+  Future<List<int>> insertAll(List<Warehouse> warehouses);
 
-  @delete
-  Future<void> deleteOne(Warehouse warehouse);
+  @Query('DELETE FROM Warehouse WHERE id=:id')
+  Future<void> deleteOne(int id);
 
   @Query("DELETE FROM Warehouse")
   Future<void> deleteAll();
@@ -24,4 +24,8 @@ abstract class WarehouseDao {
   @transaction
   Future<void> replaceAll(List<Warehouse> warehouses) =>
       Future.wait([deleteAll(), insertAll(warehouses)]);
+
+  @transaction
+  Future<void> replace(Warehouse warehouse) =>
+      Future.wait([deleteOne(warehouse.id), insertOne(warehouse)]);
 }

@@ -41,13 +41,13 @@ class WarehouseController extends BaseController<Warehouse>
 
   addWarehouse() {
     final data = WarehouseAddDto(name: name.text, address: address.text);
-    warehouseRepository.addWarehouse(data).forEach((result) {
+    warehouseRepository.storeWarehouse(data).forEach((result) {
       result.when(
           Success: (done) {
             errorMessage.value = "";
             addLoading.value = false;
           },
-          Loading: (done) => addLoading.value = done ?? true,
+          Loading: (done) => addLoading.value = done != null ? true : false,
           Error: (err, done) {
             addLoading.value = false;
             errorMessage.value = err;

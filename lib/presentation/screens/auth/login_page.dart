@@ -22,17 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (Get.arguments['withError']) {
-        Get.snackbar("Unexpected Error", "Please try logging in again!",
-            snackPosition: SnackPosition.BOTTOM);
-      }
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -49,7 +38,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Container(
               width: widthQuery(
-                  context, MediaQuery.of(context).size.width > 420 ? 60 : 100),
+                  context, MediaQuery
+                  .of(context)
+                  .size
+                  .width > 420 ? 60 : 100),
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -112,19 +104,23 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      Obx(() => authC.loading.value
+                      Obx(() =>
+                      authC.loading.value
                           ? const CircularProgressIndicator()
                           : SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.75,
-                              child: ElevatedButton(
-                                child: const Text("Sign in"),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    authC.submitLogin();
-                                  }
-                                },
-                              ),
-                            )),
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.75,
+                        child: ElevatedButton(
+                          child: const Text("Sign in"),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              authC.submitLogin();
+                            }
+                          },
+                        ),
+                      )),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: RichText(

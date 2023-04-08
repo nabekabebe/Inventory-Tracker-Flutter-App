@@ -1,9 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:inventory_tracker/core/common/routes.dart';
-import 'package:inventory_tracker/core/utils/common.dart';
 import 'package:inventory_tracker/domain/controllers/search_controller.dart';
+import 'package:inventory_tracker/presentation/screens/Search/delegates/flow.delegate.dart';
+import 'package:inventory_tracker/presentation/screens/Search/widgets/filter_sheet.dart';
+import 'package:inventory_tracker/presentation/screens/Search/widgets/search_result.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -20,10 +22,15 @@ class _SearchPageState extends State<SearchPage>
   final choices2 = ["shop1", "shop2"];
 
   late AnimationController controller;
+  late FloatingSearchBarController searchBarController;
+
+  final searchLists = ["rabbit", "dog", "cat"];
 
   @override
   void initState() {
     super.initState();
+    searchC.dataList.value = searchLists;
+    searchBarController = FloatingSearchBarController();
     controller = AnimationController(
       duration: const Duration(milliseconds: 250),
       vsync: this,
@@ -36,111 +43,140 @@ class _SearchPageState extends State<SearchPage>
     super.dispose();
   }
 
+  submitQuery(query) {
+    searchBarController.query = query;
+    searchC.queryText.value = query;
+    searchBarController.close();
+  }
+
+  fabAction(String? route, [dynamic args]) {
+    searchC.chosenIcon.value = !searchC.chosenIcon.value;
+    controller.isCompleted ? controller.reverse() : null;
+    if (route != null) {
+      Get.toNamed(route, arguments: args);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.teal,
-        currentIndex: 1,
-        onTap: Routes.switchRoute,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.storefront_sharp),
-            label: "Warehouse",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: "Statistics",
-          ),
-        ],
-      ),
-      floatingActionButton: Flow(
-        delegate: FlowMenuDelegate(controller: controller, ctx: context),
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              controller.isCompleted
-                  ? controller.reverse()
-                  : controller.forward();
-            },
-            child: const Icon(
-              Icons.access_alarm_outlined,
-              color: Colors.white,
-              size: 45.0,
+        floatingActionButton: Flow(
+          delegate: FlowMenuDelegate(controller: controller, ctx: context),
+          children: [
+            FloatingActionButton(
+              heroTag: "fab_1",
+              elevation: 1,
+              onPressed: () {
+                fabAction(Routes.ADD_INVENTORY, {'isFromFile': true});
+              },
+              child: const Icon(
+                Icons.file_copy_sharp,
+                color: Colors.white,
+              ),
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              controller.isCompleted
-                  ? controller.reverse()
-                  : controller.forward();
-            },
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 45.0,
+            FloatingActionButton(
+              heroTag: "fab_2",
+              elevation: 1,
+              onPressed: () {
+                fabAction(Routes.ADD_INVENTORY);
+              },
+              child: const Icon(
+                Icons.edit_note_sharp,
+                color: Colors.white,
+              ),
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              controller.isCompleted
-                  ? controller.reverse()
-                  : controller.forward();
-            },
-            child: const Icon(
-              Icons.close,
-              color: Colors.white,
-              size: 45.0,
+            FloatingActionButton(
+              heroTag: "fab_3",
+              onPressed: () {
+                searchC.chosenIcon.value = !searchC.chosenIcon.value;
+                controller.isCompleted
+                    ? controller.reverse()
+                    : controller.forward();
+              },
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return ScaleTransition(scale: animation, child: child);
+                },
+                child: Obx(
+                  () => Icon(
+                    searchC.chosenIcon.isTrue ? Icons.add : Icons.close,
+                    key: ValueKey<bool>(searchC.chosenIcon.value),
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [],
-      ),
-    );
-  }
-}
-
-class FlowMenuDelegate extends FlowDelegate {
-  final BuildContext ctx;
-
-  FlowMenuDelegate({required this.controller, required this.ctx})
-      : super(repaint: controller);
-
-  final Animation<double> controller;
-
-  @override
-  bool shouldRepaint(FlowMenuDelegate oldDelegate) {
-    return controller != oldDelegate.controller;
-  }
-
-  @override
-  void paintChildren(FlowPaintingContext context) {
-    for (int i = 0; i < context.childCount - 1; i++) {
-      final radius = 100 * controller.value;
-      final theta = i * pi * 0.5 / (context.childCount - 2);
-      final x = radius * cos(theta);
-      final y = radius * sin(theta);
-
-      context.paintChild(i,
-          transform: Matrix4.translationValues(
-              widthQuery(ctx, 84) - x, heightQuery(ctx, 92) - y, 0));
-    }
-
-    context.paintChild(context.childCount - 1,
-        transform: Matrix4.translationValues(
-            widthQuery(ctx, 84), heightQuery(ctx, 92), 0));
+          ],
+        ),
+        body: SafeArea(
+          child: Stack(fit: StackFit.expand, children: [
+            FloatingSearchBar(
+                automaticallyImplyBackButton: false,
+                controller: searchBarController,
+                transitionCurve: Curves.easeInOut,
+                physics: const BouncingScrollPhysics(),
+                openAxisAlignment: 0.0,
+                elevation: 2,
+                title: Obx(() => Text(searchC.queryText.value)),
+                leadingActions: [
+                  CircularButton(
+                      icon: const Icon(Icons.qr_code_scanner), onPressed: () {})
+                ],
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 64,
+                      ),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                      SearchItem(),
+                    ],
+                  ),
+                ),
+                onQueryChanged: (query) {
+                  searchC.dataList.value = searchLists
+                      .where((v) => v.toString().startsWith(query))
+                      .toList();
+                },
+                onSubmitted: (query) {
+                  submitQuery(query);
+                },
+                transition: SlideFadeFloatingSearchBarTransition(),
+                actions: [
+                  FloatingSearchBarAction.searchToClear(
+                    showIfClosed: false,
+                  ),
+                  CircularButton(
+                    icon: const Icon(Icons.tune),
+                    onPressed: () => Get.bottomSheet(const FilterSheet()),
+                  ),
+                ],
+                builder: (context, transition) {
+                  return Card(
+                    child: Obx(
+                      () => Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: searchC.dataList.map((value) {
+                          return ListTile(
+                            title: Text(value),
+                            onTap: () {
+                              submitQuery(value);
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  );
+                }),
+          ]),
+        ));
   }
 }

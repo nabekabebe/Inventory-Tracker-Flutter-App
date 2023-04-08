@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:excel/excel.dart' hide Border;
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
@@ -19,6 +23,22 @@ class InventoryController extends BaseController<Inventory>
 
   ImageSource? source;
 
+  bool isFromFile = false;
+
+  @override
+  void onInit() {
+    super.onInit();
+    isFromFile = Get.arguments != null ? Get.arguments['isFromFile'] : false;
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (isFromFile) {
+        Get.dialog(
+            // barrierDismissible: false,
+            buildFileChooser());
+      }
+    });
+  }
+
   void pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
     Get.dialog(buildChoiceDialog(context));
@@ -29,6 +49,20 @@ class InventoryController extends BaseController<Inventory>
   void scanBarcode() async {
     barcode.text = await FlutterBarcodeScanner.scanBarcode(
         "#ff6666", "Cancel", false, ScanMode.BARCODE);
+  }
+
+  void pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['xls', 'xlsx'],
+    );
+
+    if (result != null) {
+      var bytes = File(result.files.first.path!).readAsBytesSync();
+      var excel = Excel.decodeBytes(bytes);
+    } else {
+      // User canceled the picker
+    }
   }
 
   Widget buildChoiceDialog(BuildContext context) {
@@ -60,6 +94,45 @@ class InventoryController extends BaseController<Inventory>
     );
   }
 
+  Widget buildFileChooser() {
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "eg. file.xls",
+              style: TextStyle(color: Colors.grey[500], fontSize: 18.0),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // pickFile();
+              },
+              child: const Text("Choose File"),
+            ),
+            ExpansionTile(
+              shape: const Border(),
+              childrenPadding: const EdgeInsets.symmetric(horizontal: 12),
+              title: Text("See format hint",
+                  style: TextStyle(color: Colors.grey[500], fontSize: 12)),
+              children: [
+                Text(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et "
+                    "finibus dolor. Curabitur viverra lectus eu sapien venenatis tempus. ",
+                    style: TextStyle(color: Colors.grey[500], fontSize: 12))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   void clearForm() {
     itemName.text = "";
@@ -69,4 +142,15 @@ class InventoryController extends BaseController<Inventory>
     quantity.text = "";
     shop.value = "";
   }
+
+  void submitForm() {
+    Get.defaultDialog(
+        content: const Text("Confirm inventory add"),
+        onConfirm: () {
+          addInventory();
+        },
+        onCancel: () {});
+  }
+
+  void addInventory() {}
 }

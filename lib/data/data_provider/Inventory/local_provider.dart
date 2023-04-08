@@ -12,17 +12,20 @@ class LocalInventoryProvider {
 
   Stream<Inventory?> getInventory(int id) => inventoryDao.getOne(id);
 
-  Future<void> insertInventory(Inventory inventory) =>
+  Future<int> insertInventory(Inventory inventory) =>
       inventoryDao.insertOne(inventory);
 
-  Future<void> insertInventories(List<Inventory> inventories) =>
+  Future<List<int>> insertInventories(List<Inventory> inventories) =>
       inventoryDao.insertAll(inventories);
 
-  Future<void> replaceInventories(List<Inventory> inventories) =>
-      inventoryDao.replaceAll(inventories);
+  Stream replaceInventory(Inventory inventory) =>
+      inventoryDao.replace(inventory).asStream();
 
-  Future<void> deleteInventory(Inventory inventory) =>
-      inventoryDao.deleteOne(inventory);
+  Stream replaceInventories(List<Inventory> inventories) =>
+      inventoryDao.replaceAll(inventories).asStream();
 
-  Future<void> deleteInventories() => inventoryDao.deleteAll();
+  Future deleteInventory(int inventoryId) =>
+      inventoryDao.deleteOne(inventoryId);
+
+  Future deleteInventories() => inventoryDao.deleteAll();
 }

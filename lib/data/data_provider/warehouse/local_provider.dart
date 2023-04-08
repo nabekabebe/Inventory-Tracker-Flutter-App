@@ -12,17 +12,19 @@ class LocalWarehouseProvider {
 
   Stream<Warehouse?> getWarehouse(int id) => warehouseDao.getOne(id);
 
-  Future<void> insertWarehouse(Warehouse warehouse) =>
+  Future<int> insertWarehouse(Warehouse warehouse) =>
       warehouseDao.insertOne(warehouse);
 
-  Future<void> insertWarehouses(List<Warehouse> warehouses) =>
+  Future<List<int>> insertWarehouses(List<Warehouse> warehouses) =>
       warehouseDao.insertAll(warehouses);
 
-  Future<void> replaceWarehouses(List<Warehouse> warehouses) =>
-      warehouseDao.replaceAll(warehouses);
+  Stream replaceWarehouses(List<Warehouse> warehouses) =>
+      warehouseDao.replaceAll(warehouses).asStream();
 
-  Future<void> deleteWarehouse(Warehouse warehouse) =>
-      warehouseDao.deleteOne(warehouse);
+  Stream replaceWarehouse(Warehouse warehouses) =>
+      warehouseDao.replace(warehouses).asStream();
 
-  Future<void> deleteWarehouses() => warehouseDao.deleteAll();
+  Future deleteWarehouse(int id) => warehouseDao.deleteOne(id);
+
+  Future deleteWarehouses() => warehouseDao.deleteAll();
 }

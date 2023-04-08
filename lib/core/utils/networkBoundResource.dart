@@ -28,7 +28,7 @@ Stream<Resource<ResultType>> networkBoundResource<ResultType, RequestType>(
   yield* result;
 }
 
-Stream<Resource<ResultType>> apiFetch<RequestType, ResultType>(
+Stream<Resource<ResultType>> networkRequest<RequestType, ResultType>(
     Future<Either<AppException, RequestType>> Function() fetch,
     ResultType Function(RequestType fetchResult) transformResult,
     Function(ResultType transformedData) saveFetchedResult) async* {

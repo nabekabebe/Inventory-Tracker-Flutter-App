@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:inventory_tracker/core/common/routes.dart';
+import 'package:inventory_tracker/main.dart';
 import 'package:inventory_tracker/presentation/bindings/auth_binding.dart';
 import 'package:inventory_tracker/presentation/bindings/home_binding.dart';
 import 'package:inventory_tracker/presentation/bindings/inventory_binding.dart';
@@ -8,9 +9,9 @@ import 'package:inventory_tracker/presentation/bindings/search_binding.dart';
 import 'package:inventory_tracker/presentation/bindings/warehouse_binding.dart';
 import 'package:inventory_tracker/presentation/screens/Home/home_screen.dart';
 import 'package:inventory_tracker/presentation/screens/Search/search_screen.dart';
+import 'package:inventory_tracker/presentation/screens/Search/widgets/inventory_add.dart';
 import 'package:inventory_tracker/presentation/screens/auth/login_page.dart';
 import 'package:inventory_tracker/presentation/screens/auth/signup_page.dart';
-import 'package:inventory_tracker/presentation/screens/inventory/inventory_add.dart';
 import 'package:inventory_tracker/presentation/screens/report/report.dart';
 import 'package:inventory_tracker/presentation/screens/warehouse/warehouse_screen.dart';
 
@@ -22,6 +23,8 @@ class Pages {
   static final inventoryBinding = InventoryBinding();
   static final warehouseBinding = WarehouseBinding();
   static final reportBinding = ReportBinding();
+
+  static final appBinding = ReportBinding();
 
   static final List<GetPage> pages = [
     GetPage(
@@ -45,5 +48,9 @@ class Pages {
         name: Routes.REPORT,
         page: () => const ReportPage(),
         binding: reportBinding),
+    GetPage(
+        name: Routes.APP,
+        page: () => const InventoryView(),
+        binding: appBinding),
   ];
 }

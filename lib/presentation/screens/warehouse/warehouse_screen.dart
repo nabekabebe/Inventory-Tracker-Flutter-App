@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:inventory_tracker/core/common/routes.dart';
 import 'package:inventory_tracker/domain/controllers/warehouse_controller.dart';
 
 class WarehousePage extends StatefulWidget {
@@ -16,35 +15,10 @@ class _WarehousePageState extends State<WarehousePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.teal,
-        currentIndex: 2,
-        onTap: Routes.switchRoute,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.storefront_sharp),
-            label: "Warehouse",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: "Statistics",
-          ),
-        ],
-      ),
       appBar: AppBar(
         title: const Text("Warehouses"),
         elevation: 1,
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: ListView.builder(

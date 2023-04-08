@@ -88,6 +88,17 @@ class AuthController extends GetxController with FormValidationMixin {
     });
   }
 
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (Get.arguments != null && Get.arguments['withError']) {
+        Get.snackbar("Unexpected Error", "Please try logging in again!",
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    });
+    super.onInit();
+  }
+
   //clears form
   @override
   void clearForm() {
@@ -98,7 +109,7 @@ class AuthController extends GetxController with FormValidationMixin {
     errorMessage.value = "";
   }
 
-  bool isLoggedIn() => sessionManager.isUserLoggedIn();
+  bool isLoggedIn() => true ?? sessionManager.isUserLoggedIn();
 
   bool get hasError => errorMessage.value.isNotEmpty;
 

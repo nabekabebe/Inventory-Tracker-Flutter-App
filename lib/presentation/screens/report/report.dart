@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_tracker/core/common/routes.dart';
 import 'package:inventory_tracker/domain/controllers/report_controller.dart';
 import 'package:inventory_tracker/presentation/screens/report/widgets/inventory_report.dart';
 import 'package:inventory_tracker/presentation/screens/report/widgets/warehouse_report.dart';
@@ -33,33 +32,8 @@ class _ReportPageState extends State<ReportPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.teal,
-          showSelectedLabels: false,
-          currentIndex: 3,
-          onTap: Routes.switchRoute,
-          showUnselectedLabels: false,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: "Search",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.storefront_sharp),
-              label: "Warehouse",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart),
-              label: "Statistics",
-            ),
-          ],
-        ),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           bottom: TabBar(
             controller: _tabController,
             tabs: myTabs,
