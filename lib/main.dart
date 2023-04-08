@@ -12,8 +12,9 @@ import 'package:inventory_tracker/injection.dart';
 import 'package:inventory_tracker/presentation/screens/Home/home_screen.dart';
 import 'package:inventory_tracker/presentation/screens/Search/search_screen.dart';
 import 'package:inventory_tracker/presentation/screens/report/report.dart';
+import 'package:inventory_tracker/presentation/screens/splash/custom_boarding.dart';
+import 'package:inventory_tracker/presentation/screens/splash/splash_screen.dart';
 import 'package:inventory_tracker/presentation/screens/warehouse/warehouse_screen.dart';
-import 'package:inventory_tracker/presentation/screens/warehouse/widgets/create_transfer.dart';
 
 import 'core/common/theme.dart';
 
@@ -34,11 +35,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialBinding: Pages.warehouseBinding,
-      // home: AuthController.c.isNewUser()
-      //     ? const CustomBoarding()
-      //     : const SplashScreen(),
-      home: CreateTransfer(),
+      initialBinding: Pages.authBinding,
+      home: AuthController.c.isNewUser()
+          ? const CustomBoarding()
+          : const SplashScreen(),
+      // home: CreateTransfer(),
       getPages: Pages.pages,
     );
   }

@@ -27,6 +27,9 @@ Here are some of the key features of Inventory Management App:
 - **Batch Inventory Transfer:** The app supports batch inventory transfer between warehouses, making
   it easy to move inventory between locations.
 
+![alt text](./assets/screenshots/home.png)      ![alt text](./assets/screenshots/search.png)
+![alt text](./assets/screenshots/report.png)      ![alt text](./assets/screenshots/filter.png)
+
 ## Getting Started
 
 To get started with Inventory Management App, follow these steps:
