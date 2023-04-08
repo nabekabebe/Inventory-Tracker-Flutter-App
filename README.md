@@ -33,9 +33,8 @@ Here are some of the key features of Inventory Management App:
   <img alt="Dark" src="./assets/screenshots/search.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="Dark" src="./assets/screenshots/report.png" width="25%">
-&nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="Dark" src="./assets/screenshots/warehouse.png" width="25%">
-
+&nbsp; &nbsp; &nbsp; &nbsp;
  <img alt="Dark" src="./assets/screenshots/add.png" width="25%">
 &nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="Dark" src="./assets/screenshots/filter.png" width="25%">
